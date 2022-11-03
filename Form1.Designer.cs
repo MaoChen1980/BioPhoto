@@ -28,48 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.label1 = new System.Windows.Forms.Label();
+            this.listView_folder = new System.Windows.Forms.ListView();
+            this.label_folder_list = new System.Windows.Forms.Label();
             this.button_add_folder = new System.Windows.Forms.Button();
             this.button_remove_folder = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.label_location = new System.Windows.Forms.Label();
+            this.textBox_location = new System.Windows.Forms.TextBox();
+            this.textBox_camera = new System.Windows.Forms.TextBox();
+            this.label_camera = new System.Windows.Forms.Label();
+            this.label_extname = new System.Windows.Forms.Label();
+            this.textBox_extname = new System.Windows.Forms.TextBox();
+            this.label_columns = new System.Windows.Forms.Label();
+            this.textBox_columns = new System.Windows.Forms.TextBox();
+            this.checkBox_backup = new System.Windows.Forms.CheckBox();
+            this.checkBox_timestart = new System.Windows.Forms.CheckBox();
+            this.checkBox_report = new System.Windows.Forms.CheckBox();
+            this.checkBox_rename = new System.Windows.Forms.CheckBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label6 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox1.SuspendLayout();
+            this.dateTimePicker_starttime = new System.Windows.Forms.DateTimePicker();
+            this.groupBox_others = new System.Windows.Forms.GroupBox();
+            this.groupBox_others.SuspendLayout();
             this.SuspendLayout();
             // 
-            // listView1
+            // listView_folder
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(41, 39);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(399, 147);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView_folder.HideSelection = false;
+            this.listView_folder.Location = new System.Drawing.Point(41, 39);
+            this.listView_folder.Name = "listView_folder";
+            this.listView_folder.Size = new System.Drawing.Size(399, 147);
+            this.listView_folder.TabIndex = 0;
+            this.listView_folder.UseCompatibleStateImageBehavior = false;
+            this.listView_folder.View = System.Windows.Forms.View.List;
             // 
-            // label1
+            // label_folder_list
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(16, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(126, 14);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "1. 待处理文件目录";
+            this.label_folder_list.AutoSize = true;
+            this.label_folder_list.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_folder_list.Location = new System.Drawing.Point(16, 9);
+            this.label_folder_list.Name = "label_folder_list";
+            this.label_folder_list.Size = new System.Drawing.Size(133, 14);
+            this.label_folder_list.TabIndex = 1;
+            this.label_folder_list.Text = "1. 待处理文件目录:";
             // 
             // button_add_folder
             // 
@@ -79,6 +80,7 @@
             this.button_add_folder.TabIndex = 2;
             this.button_add_folder.Text = "添加文件目录";
             this.button_add_folder.UseVisualStyleBackColor = true;
+            this.button_add_folder.Click += new System.EventHandler(this.button_add_folder_Click);
             // 
             // button_remove_folder
             // 
@@ -86,122 +88,123 @@
             this.button_remove_folder.Name = "button_remove_folder";
             this.button_remove_folder.Size = new System.Drawing.Size(185, 37);
             this.button_remove_folder.TabIndex = 3;
-            this.button_remove_folder.Text = "删除文件目录";
+            this.button_remove_folder.Text = "删除选中的文件目录";
             this.button_remove_folder.UseVisualStyleBackColor = true;
+            this.button_remove_folder.Click += new System.EventHandler(this.button_remove_folder_Click);
             // 
-            // label2
+            // label_location
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(16, 242);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(98, 14);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "2. 设点位编号";
+            this.label_location.AutoSize = true;
+            this.label_location.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_location.Location = new System.Drawing.Point(16, 242);
+            this.label_location.Name = "label_location";
+            this.label_location.Size = new System.Drawing.Size(98, 14);
+            this.label_location.TabIndex = 4;
+            this.label_location.Text = "2. 设点位编号";
             // 
-            // textBox1
+            // textBox_location
             // 
-            this.textBox1.Location = new System.Drawing.Point(41, 266);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(399, 21);
-            this.textBox1.TabIndex = 5;
+            this.textBox_location.Location = new System.Drawing.Point(41, 263);
+            this.textBox_location.Name = "textBox_location";
+            this.textBox_location.Size = new System.Drawing.Size(399, 21);
+            this.textBox_location.TabIndex = 5;
             // 
-            // textBox2
+            // textBox_camera
             // 
-            this.textBox2.Location = new System.Drawing.Point(41, 328);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(399, 21);
-            this.textBox2.TabIndex = 7;
+            this.textBox_camera.Location = new System.Drawing.Point(41, 321);
+            this.textBox_camera.Name = "textBox_camera";
+            this.textBox_camera.Size = new System.Drawing.Size(399, 21);
+            this.textBox_camera.TabIndex = 7;
             // 
-            // label3
+            // label_camera
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(16, 303);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 14);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "3. 相机编号";
+            this.label_camera.AutoSize = true;
+            this.label_camera.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_camera.Location = new System.Drawing.Point(16, 299);
+            this.label_camera.Name = "label_camera";
+            this.label_camera.Size = new System.Drawing.Size(84, 14);
+            this.label_camera.TabIndex = 6;
+            this.label_camera.Text = "3. 相机编号";
             // 
-            // label4
+            // label_extname
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(16, 363);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(203, 14);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "4. 数据文件后缀名( 用/分割 )";
+            this.label_extname.AutoSize = true;
+            this.label_extname.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_extname.Location = new System.Drawing.Point(16, 356);
+            this.label_extname.Name = "label_extname";
+            this.label_extname.Size = new System.Drawing.Size(203, 14);
+            this.label_extname.TabIndex = 8;
+            this.label_extname.Text = "4. 数据文件后缀名( 用/分割 )";
             // 
-            // textBox3
+            // textBox_extname
             // 
-            this.textBox3.Location = new System.Drawing.Point(41, 391);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(399, 21);
-            this.textBox3.TabIndex = 9;
-            this.textBox3.Text = "png,jpg,avi,rm,rmvb,tif";
+            this.textBox_extname.Location = new System.Drawing.Point(41, 380);
+            this.textBox_extname.Name = "textBox_extname";
+            this.textBox_extname.Size = new System.Drawing.Size(399, 21);
+            this.textBox_extname.TabIndex = 9;
+            this.textBox_extname.Text = "png,jpg,avi,rm,rmvb,tif";
             // 
-            // label5
+            // label_columns
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(16, 434);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(154, 14);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "5. 新增列（逗号分隔）";
+            this.label_columns.AutoSize = true;
+            this.label_columns.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label_columns.Location = new System.Drawing.Point(16, 415);
+            this.label_columns.Name = "label_columns";
+            this.label_columns.Size = new System.Drawing.Size(154, 14);
+            this.label_columns.TabIndex = 10;
+            this.label_columns.Text = "5. 新增列（逗号分隔）";
             // 
-            // textBox4
+            // textBox_columns
             // 
-            this.textBox4.Location = new System.Drawing.Point(41, 460);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(399, 21);
-            this.textBox4.TabIndex = 11;
-            this.textBox4.Text = "对象类别,物种名称,动物数量,性别,独立探测首张,备注";
+            this.textBox_columns.Location = new System.Drawing.Point(41, 444);
+            this.textBox_columns.Name = "textBox_columns";
+            this.textBox_columns.Size = new System.Drawing.Size(399, 21);
+            this.textBox_columns.TabIndex = 11;
+            this.textBox_columns.Text = "对象类别,物种名称,动物数量,性别,独立探测首张,备注";
             // 
-            // checkBox1
+            // checkBox_backup
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(23, 28);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(117, 18);
-            this.checkBox1.TabIndex = 12;
-            this.checkBox1.Text = "备份 / Backup";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox_backup.AutoSize = true;
+            this.checkBox_backup.Location = new System.Drawing.Point(23, 25);
+            this.checkBox_backup.Name = "checkBox_backup";
+            this.checkBox_backup.Size = new System.Drawing.Size(117, 18);
+            this.checkBox_backup.TabIndex = 12;
+            this.checkBox_backup.Text = "备份 / Backup";
+            this.checkBox_backup.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // checkBox_timestart
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(23, 94);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(201, 18);
-            this.checkBox2.TabIndex = 13;
-            this.checkBox2.Text = "重设开始时间 / Start Time";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox_timestart.AutoSize = true;
+            this.checkBox_timestart.Location = new System.Drawing.Point(23, 114);
+            this.checkBox_timestart.Name = "checkBox_timestart";
+            this.checkBox_timestart.Size = new System.Drawing.Size(201, 18);
+            this.checkBox_timestart.TabIndex = 13;
+            this.checkBox_timestart.Text = "重设开始时间 / Start Time";
+            this.checkBox_timestart.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // checkBox_report
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(23, 72);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(145, 18);
-            this.checkBox3.TabIndex = 14;
-            this.checkBox3.Text = "生成报表 / Report";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox_report.AutoSize = true;
+            this.checkBox_report.Location = new System.Drawing.Point(23, 54);
+            this.checkBox_report.Name = "checkBox_report";
+            this.checkBox_report.Size = new System.Drawing.Size(145, 18);
+            this.checkBox_report.TabIndex = 14;
+            this.checkBox_report.Text = "生成报表 / Report";
+            this.checkBox_report.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // checkBox_rename
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(23, 50);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(124, 18);
-            this.checkBox4.TabIndex = 15;
-            this.checkBox4.Text = "重命名 /Rename";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox_rename.AutoSize = true;
+            this.checkBox_rename.Location = new System.Drawing.Point(23, 82);
+            this.checkBox_rename.Name = "checkBox_rename";
+            this.checkBox_rename.Size = new System.Drawing.Size(124, 18);
+            this.checkBox_rename.TabIndex = 15;
+            this.checkBox_rename.Text = "重命名 /Rename";
+            this.checkBox_rename.UseVisualStyleBackColor = true;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(16, 715);
+            this.progressBar1.Location = new System.Drawing.Point(19, 729);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(424, 27);
             this.progressBar1.TabIndex = 16;
@@ -210,7 +213,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(25, 690);
+            this.label6.Location = new System.Drawing.Point(16, 700);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(63, 14);
             this.label6.TabIndex = 17;
@@ -218,66 +221,66 @@
             // 
             // button1
             // 
+            this.button1.FlatAppearance.BorderSize = 2;
             this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(99, 622);
+            this.button1.Location = new System.Drawing.Point(105, 639);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(250, 64);
             this.button1.TabIndex = 18;
             this.button1.Text = "处理";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // dateTimePicker1
+            // dateTimePicker_starttime
             // 
-            this.dateTimePicker1.Checked = false;
-            this.dateTimePicker1.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.dateTimePicker1.CustomFormat = "yyyy-MM-dd   HH:mm:ss";
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(222, 89);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.ShowCheckBox = true;
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 23);
-            this.dateTimePicker1.TabIndex = 19;
+            this.dateTimePicker_starttime.Checked = false;
+            this.dateTimePicker_starttime.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.dateTimePicker_starttime.CustomFormat = "yyyy-MM-dd  HH:mm:ss";
+            this.dateTimePicker_starttime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker_starttime.Location = new System.Drawing.Point(226, 112);
+            this.dateTimePicker_starttime.Name = "dateTimePicker_starttime";
+            this.dateTimePicker_starttime.Size = new System.Drawing.Size(200, 23);
+            this.dateTimePicker_starttime.TabIndex = 19;
             // 
-            // groupBox1
+            // groupBox_others
             // 
-            this.groupBox1.Controls.Add(this.dateTimePicker1);
-            this.groupBox1.Controls.Add(this.checkBox4);
-            this.groupBox1.Controls.Add(this.checkBox3);
-            this.groupBox1.Controls.Add(this.checkBox2);
-            this.groupBox1.Controls.Add(this.checkBox1);
-            this.groupBox1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox1.Location = new System.Drawing.Point(18, 487);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(432, 130);
-            this.groupBox1.TabIndex = 20;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "6. 其他设置";
+            this.groupBox_others.Controls.Add(this.dateTimePicker_starttime);
+            this.groupBox_others.Controls.Add(this.checkBox_rename);
+            this.groupBox_others.Controls.Add(this.checkBox_report);
+            this.groupBox_others.Controls.Add(this.checkBox_timestart);
+            this.groupBox_others.Controls.Add(this.checkBox_backup);
+            this.groupBox_others.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox_others.Location = new System.Drawing.Point(18, 487);
+            this.groupBox_others.Name = "groupBox_others";
+            this.groupBox_others.Size = new System.Drawing.Size(432, 146);
+            this.groupBox_others.TabIndex = 20;
+            this.groupBox_others.TabStop = false;
+            this.groupBox_others.Text = "6. 其他设置";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(462, 754);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(462, 768);
+            this.Controls.Add(this.groupBox_others);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBox_columns);
+            this.Controls.Add(this.label_columns);
+            this.Controls.Add(this.textBox_extname);
+            this.Controls.Add(this.label_extname);
+            this.Controls.Add(this.textBox_camera);
+            this.Controls.Add(this.label_camera);
+            this.Controls.Add(this.textBox_location);
+            this.Controls.Add(this.label_location);
             this.Controls.Add(this.button_remove_folder);
             this.Controls.Add(this.button_add_folder);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.label_folder_list);
+            this.Controls.Add(this.listView_folder);
             this.Name = "Form1";
             this.Text = "BioPhoto-2.2";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBox_others.ResumeLayout(false);
+            this.groupBox_others.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -285,27 +288,27 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListView listView_folder;
+        private System.Windows.Forms.Label label_folder_list;
         private System.Windows.Forms.Button button_add_folder;
         private System.Windows.Forms.Button button_remove_folder;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Label label_location;
+        private System.Windows.Forms.TextBox textBox_location;
+        private System.Windows.Forms.TextBox textBox_camera;
+        private System.Windows.Forms.Label label_camera;
+        private System.Windows.Forms.Label label_extname;
+        private System.Windows.Forms.TextBox textBox_extname;
+        private System.Windows.Forms.Label label_columns;
+        private System.Windows.Forms.TextBox textBox_columns;
+        private System.Windows.Forms.CheckBox checkBox_backup;
+        private System.Windows.Forms.CheckBox checkBox_timestart;
+        private System.Windows.Forms.CheckBox checkBox_report;
+        private System.Windows.Forms.CheckBox checkBox_rename;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker_starttime;
+        private System.Windows.Forms.GroupBox groupBox_others;
     }
 }
 
