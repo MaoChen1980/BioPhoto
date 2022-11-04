@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
+using static System.Windows.Forms.LinkLabel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BioPhoto
@@ -34,8 +40,12 @@ namespace BioPhoto
                     if (folderBrowserDialog1.SelectedPath != null && folderBrowserDialog1.SelectedPath.Length >0)
                     {
                         String selectedPath = folderBrowserDialog1.SelectedPath;
+                        ListViewItem item = null;
 
-                        if (listView_folder.FindItemWithText(selectedPath) == null)
+                        if (listView_folder.Items.Count >0)
+                            item = listView_folder.FindItemWithText(selectedPath,false,0 , false);
+
+                        if (item == null || item.Text.CompareTo(selectedPath) != 0)
                         {
                             listView_folder.Items.Add(selectedPath);
                         }
@@ -62,5 +72,212 @@ namespace BioPhoto
                         listView_folder.Items.Remove(item);
             }
         }
+
+        private void button_process_Click(object sender, EventArgs e)
+        {
+            List<String> folderlist = new List<String>();
+            String location = textBox_location.Text;
+            String camera = textBox_camera.Text;
+            List<String> fileext = new List<String>();
+            List<String> columns= new List<String>();
+            bool backup = checkBox_backup.Checked;
+            bool report = checkBox_report.Checked;
+            bool rename = checkBox_rename.Checked;
+            bool timeChange = checkBox_timestart.Checked;
+            DateTime starttime = dateTimePicker_starttime.Value;
+
+
+            ///pre handle
+            foreach (ListViewItem item in listView_folder.Items)
+                folderlist.Add(item.Text);
+
+            ////
+            String text_ext = textBox_extname.Text;
+            String[] all_ext = text_ext.Split(',');
+            if (all_ext != null && all_ext.Length > 0)
+            {
+                fileext.AddRange(all_ext);
+            }
+
+            ////
+            String text_columns = textBox_columns.Text;
+            String[] all_columms = text_columns.Split(',');
+            if (all_columms != null && all_columms.Length > 0)
+            {
+                columns.AddRange(all_columms);
+            }
+
+            if (folderlist.Count==0)
+            {
+                MessageBox.Show("请先添加需要处理的文件夹");
+                return;
+            }
+
+            if (location.Length == 0)
+            {
+                MessageBox.Show("请先添加位置编号");
+                return;
+            }
+
+            if (camera.Length == 0)
+            {
+                MessageBox.Show("请先添加相机编号");
+                return;
+            }
+
+            if (fileext.Count == 0)
+            {
+                MessageBox.Show("请先添加需要处理的文件后缀名");
+                return;
+            }
+
+            List<String> filesearchpattern = new List<String>();
+            foreach (String ext in fileext)
+            {
+                filesearchpattern.Add("." + ext.ToLower());
+            }
+
+
+
+            foreach (String folder in folderlist)
+            {
+                List<FileInfo> files = new List<FileInfo>();
+                System.IO.DirectoryInfo rootInfo = new System.IO.DirectoryInfo(folder);
+
+
+                // First, process all the files directly under this folder
+                try
+                {
+
+                    files = rootInfo.GetFiles().Where(f => filesearchpattern.Any(f.Name.ToLower().EndsWith)).ToList();
+                }
+                catch (UnauthorizedAccessException exp)
+                {
+                }
+                catch (System.IO.DirectoryNotFoundException exp)
+                {
+                }
+
+                if (files == null || files.Count == 0)
+                {
+                    MessageBox.Show("没有找到需要处理的文件");
+                    return;
+                }
+
+                IEnumerable<FileInfo> sorted_files = from original_file in files
+                                                                 orderby original_file.CreationTime.Ticks //"ascending" is default
+                                                                 select original_file; //sorting_by_creating_time
+                List<FileInfo> sorted_list = sorted_files.ToList();
+                List<String> original_files = null;
+
+                if (backup)
+                {
+                    Backup(sorted_files, folder);
+                }
+
+                if (rename)
+                {
+                    original_files = Rename(sorted_files);
+                }
+
+                if (report)
+                {
+                    Report(sorted_list, original_files, folder, text_columns, camera,location, timeChange, starttime);
+                }
+            }
+
+        }
+
+        private void Report(List<FileInfo> sorted_files, List<String> original_files, String folder, String header_ext, String camera, String location, bool timeChange, DateTime starttime )
+        {
+            if (sorted_files == null || sorted_files.Count<FileInfo>() ==0)
+            {
+                return;
+            }
+
+            System.IO.DirectoryInfo rootInfo = new System.IO.DirectoryInfo(folder);
+            String report_file_name = System.IO.Path.Combine(folder, rootInfo.Name + ".csv");
+
+            if (System.IO.File.Exists(report_file_name))
+            {
+                System.IO.File.Delete(report_file_name);
+            }
+            StreamWriter report_file = new StreamWriter(report_file_name);
+
+            String header_txt = "文件编号,原始文件编号,文件格式,文件夹编号,相机编号,布设点位编号,拍摄日期,拍摄时间,工作天数" + ((header_ext == null || header_ext.Length == 0) ? "" : "," + header_ext);
+            report_file.WriteLine(header_txt);
+
+            DateTime first_time = sorted_files[0].CreationTime;
+            TimeSpan timeAdjust = first_time - first_time;
+            if (timeChange)
+                timeAdjust = first_time - starttime;
+
+            for (int i = 0; i < sorted_files.Count<FileInfo>(); i++)
+            {
+                String file_name = sorted_files[i].Name;
+                String file_name_old = original_files[i];
+                String file_format = sorted_files[i].Extension.ToUpper().Substring(1);
+                DateTime adjusted_time = sorted_files[i].CreationTime - timeAdjust;
+
+                String date_create = adjusted_time.ToString("d");
+                String time_create = adjusted_time.ToString("T");
+                String working_days = "" + (sorted_files[i].CreationTime - first_time).Days +1;
+
+                String report_line = file_name + "," + file_name_old + "," + file_format + "," + "1" + "," + camera + "," + location + "," + date_create + "," + time_create + "," + working_days;
+
+                report_file.WriteLine(report_line);
+            }
+
+            report_file.Close();
+
+/*           foreach (string line in lines)
+            {
+                if (!line.Contains("Second"))
+                {
+                    await file.WriteLineAsync(line);
+                }
+            }*/
+        }
+
+        void Backup(IEnumerable<FileInfo> filelist, String folder)
+        {
+            String backup_path = System.IO.Path.Combine(folder, "Backup");
+
+            if (System.IO.Directory.Exists(backup_path))
+            {
+                System.IO.Directory.Delete(backup_path, true);
+            }
+
+            System.IO.Directory.CreateDirectory(backup_path);
+
+            foreach (FileInfo file in filelist)
+            {
+                String new_filename = System.IO.Path.Combine(backup_path, file.Name);
+                file.CopyTo(new_filename, true);
+            }
+
+        }
+
+        List<String> Rename(IEnumerable<FileInfo> filelist)
+        {
+            int filenumber = 0;
+
+            List<String> old_filename_list= new List<String>();
+
+            foreach (FileInfo file in filelist)
+            {
+                filenumber++;
+
+                old_filename_list.Add(file.Name);
+                String dirName = file.Directory.Name;
+                String filename = dirName + String.Format("{0:0000}", filenumber) + file.Extension;
+                String new_filename = System.IO.Path.Combine(file.DirectoryName, filename);
+                file.MoveTo(new_filename);
+
+            }
+
+            return old_filename_list;
+        }
     }
+
 }

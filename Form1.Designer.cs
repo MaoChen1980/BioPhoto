@@ -40,15 +40,16 @@
             this.textBox_extname = new System.Windows.Forms.TextBox();
             this.label_columns = new System.Windows.Forms.Label();
             this.textBox_columns = new System.Windows.Forms.TextBox();
-            this.checkBox_backup = new System.Windows.Forms.CheckBox();
-            this.checkBox_timestart = new System.Windows.Forms.CheckBox();
-            this.checkBox_report = new System.Windows.Forms.CheckBox();
-            this.checkBox_rename = new System.Windows.Forms.CheckBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar_process = new System.Windows.Forms.ProgressBar();
             this.label6 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.dateTimePicker_starttime = new System.Windows.Forms.DateTimePicker();
+            this.button_process = new System.Windows.Forms.Button();
             this.groupBox_others = new System.Windows.Forms.GroupBox();
+            this.labelHint = new System.Windows.Forms.Label();
+            this.dateTimePicker_starttime = new System.Windows.Forms.DateTimePicker();
+            this.checkBox_rename = new System.Windows.Forms.CheckBox();
+            this.checkBox_report = new System.Windows.Forms.CheckBox();
+            this.checkBox_timestart = new System.Windows.Forms.CheckBox();
+            this.checkBox_backup = new System.Windows.Forms.CheckBox();
             this.groupBox_others.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,9 +99,9 @@
             this.label_location.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_location.Location = new System.Drawing.Point(16, 242);
             this.label_location.Name = "label_location";
-            this.label_location.Size = new System.Drawing.Size(98, 14);
+            this.label_location.Size = new System.Drawing.Size(112, 14);
             this.label_location.TabIndex = 4;
-            this.label_location.Text = "2. 设点位编号";
+            this.label_location.Text = "2. 布设点位编号";
             // 
             // textBox_location
             // 
@@ -132,9 +133,9 @@
             this.label_extname.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_extname.Location = new System.Drawing.Point(16, 356);
             this.label_extname.Name = "label_extname";
-            this.label_extname.Size = new System.Drawing.Size(203, 14);
+            this.label_extname.Size = new System.Drawing.Size(238, 14);
             this.label_extname.TabIndex = 8;
-            this.label_extname.Text = "4. 数据文件后缀名( 用/分割 )";
+            this.label_extname.Text = "4. 数据文件后缀名( 英文逗号分隔 )";
             // 
             // textBox_extname
             // 
@@ -142,7 +143,7 @@
             this.textBox_extname.Name = "textBox_extname";
             this.textBox_extname.Size = new System.Drawing.Size(399, 21);
             this.textBox_extname.TabIndex = 9;
-            this.textBox_extname.Text = "png,jpg,avi,rm,rmvb,tif";
+            this.textBox_extname.Text = "png,jpg,jpeg,avi,rm,rmvb,tif,mp4,mov,raw";
             // 
             // label_columns
             // 
@@ -150,9 +151,9 @@
             this.label_columns.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label_columns.Location = new System.Drawing.Point(16, 415);
             this.label_columns.Name = "label_columns";
-            this.label_columns.Size = new System.Drawing.Size(154, 14);
+            this.label_columns.Size = new System.Drawing.Size(182, 14);
             this.label_columns.TabIndex = 10;
-            this.label_columns.Text = "5. 新增列（逗号分隔）";
+            this.label_columns.Text = "5. 新增列（英文逗号分隔）";
             // 
             // textBox_columns
             // 
@@ -162,52 +163,12 @@
             this.textBox_columns.TabIndex = 11;
             this.textBox_columns.Text = "对象类别,物种名称,动物数量,性别,独立探测首张,备注";
             // 
-            // checkBox_backup
+            // progressBar_process
             // 
-            this.checkBox_backup.AutoSize = true;
-            this.checkBox_backup.Location = new System.Drawing.Point(23, 25);
-            this.checkBox_backup.Name = "checkBox_backup";
-            this.checkBox_backup.Size = new System.Drawing.Size(117, 18);
-            this.checkBox_backup.TabIndex = 12;
-            this.checkBox_backup.Text = "备份 / Backup";
-            this.checkBox_backup.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_timestart
-            // 
-            this.checkBox_timestart.AutoSize = true;
-            this.checkBox_timestart.Location = new System.Drawing.Point(23, 114);
-            this.checkBox_timestart.Name = "checkBox_timestart";
-            this.checkBox_timestart.Size = new System.Drawing.Size(201, 18);
-            this.checkBox_timestart.TabIndex = 13;
-            this.checkBox_timestart.Text = "重设开始时间 / Start Time";
-            this.checkBox_timestart.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_report
-            // 
-            this.checkBox_report.AutoSize = true;
-            this.checkBox_report.Location = new System.Drawing.Point(23, 54);
-            this.checkBox_report.Name = "checkBox_report";
-            this.checkBox_report.Size = new System.Drawing.Size(145, 18);
-            this.checkBox_report.TabIndex = 14;
-            this.checkBox_report.Text = "生成报表 / Report";
-            this.checkBox_report.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_rename
-            // 
-            this.checkBox_rename.AutoSize = true;
-            this.checkBox_rename.Location = new System.Drawing.Point(23, 82);
-            this.checkBox_rename.Name = "checkBox_rename";
-            this.checkBox_rename.Size = new System.Drawing.Size(124, 18);
-            this.checkBox_rename.TabIndex = 15;
-            this.checkBox_rename.Text = "重命名 /Rename";
-            this.checkBox_rename.UseVisualStyleBackColor = true;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(19, 729);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(424, 27);
-            this.progressBar1.TabIndex = 16;
+            this.progressBar_process.Location = new System.Drawing.Point(19, 729);
+            this.progressBar_process.Name = "progressBar_process";
+            this.progressBar_process.Size = new System.Drawing.Size(424, 27);
+            this.progressBar_process.TabIndex = 16;
             // 
             // label6
             // 
@@ -219,30 +180,21 @@
             this.label6.TabIndex = 17;
             this.label6.Text = "处理进度";
             // 
-            // button1
+            // button_process
             // 
-            this.button1.FlatAppearance.BorderSize = 2;
-            this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(105, 639);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(250, 64);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "处理";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // dateTimePicker_starttime
-            // 
-            this.dateTimePicker_starttime.Checked = false;
-            this.dateTimePicker_starttime.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.dateTimePicker_starttime.CustomFormat = "yyyy-MM-dd  HH:mm:ss";
-            this.dateTimePicker_starttime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_starttime.Location = new System.Drawing.Point(226, 112);
-            this.dateTimePicker_starttime.Name = "dateTimePicker_starttime";
-            this.dateTimePicker_starttime.Size = new System.Drawing.Size(200, 23);
-            this.dateTimePicker_starttime.TabIndex = 19;
+            this.button_process.FlatAppearance.BorderSize = 2;
+            this.button_process.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button_process.Location = new System.Drawing.Point(105, 639);
+            this.button_process.Name = "button_process";
+            this.button_process.Size = new System.Drawing.Size(250, 64);
+            this.button_process.TabIndex = 18;
+            this.button_process.Text = "处理";
+            this.button_process.UseVisualStyleBackColor = true;
+            this.button_process.Click += new System.EventHandler(this.button_process_Click);
             // 
             // groupBox_others
             // 
+            this.groupBox_others.Controls.Add(this.labelHint);
             this.groupBox_others.Controls.Add(this.dateTimePicker_starttime);
             this.groupBox_others.Controls.Add(this.checkBox_rename);
             this.groupBox_others.Controls.Add(this.checkBox_report);
@@ -256,15 +208,82 @@
             this.groupBox_others.TabStop = false;
             this.groupBox_others.Text = "6. 其他设置";
             // 
+            // labelHint
+            // 
+            this.labelHint.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.labelHint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.labelHint.Location = new System.Drawing.Point(252, 44);
+            this.labelHint.Name = "labelHint";
+            this.labelHint.Size = new System.Drawing.Size(139, 46);
+            this.labelHint.TabIndex = 20;
+            this.labelHint.Text = "日期可以选择,  时间需要选中后输入";
+            // 
+            // dateTimePicker_starttime
+            // 
+            this.dateTimePicker_starttime.Checked = false;
+            this.dateTimePicker_starttime.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.dateTimePicker_starttime.CustomFormat = "yyyy-MM-dd  HH:mm:ss";
+            this.dateTimePicker_starttime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker_starttime.Location = new System.Drawing.Point(237, 112);
+            this.dateTimePicker_starttime.Name = "dateTimePicker_starttime";
+            this.dateTimePicker_starttime.Size = new System.Drawing.Size(189, 23);
+            this.dateTimePicker_starttime.TabIndex = 19;
+            this.dateTimePicker_starttime.Value = new System.DateTime(2022, 11, 3, 18, 25, 20, 0);
+            // 
+            // checkBox_rename
+            // 
+            this.checkBox_rename.AutoSize = true;
+            this.checkBox_rename.Checked = true;
+            this.checkBox_rename.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_rename.Location = new System.Drawing.Point(23, 82);
+            this.checkBox_rename.Name = "checkBox_rename";
+            this.checkBox_rename.Size = new System.Drawing.Size(124, 18);
+            this.checkBox_rename.TabIndex = 15;
+            this.checkBox_rename.Text = "重命名 /Rename";
+            this.checkBox_rename.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_report
+            // 
+            this.checkBox_report.AutoSize = true;
+            this.checkBox_report.Checked = true;
+            this.checkBox_report.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_report.Location = new System.Drawing.Point(23, 54);
+            this.checkBox_report.Name = "checkBox_report";
+            this.checkBox_report.Size = new System.Drawing.Size(145, 18);
+            this.checkBox_report.TabIndex = 14;
+            this.checkBox_report.Text = "生成报表 / Report";
+            this.checkBox_report.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_timestart
+            // 
+            this.checkBox_timestart.AutoSize = true;
+            this.checkBox_timestart.Location = new System.Drawing.Point(23, 114);
+            this.checkBox_timestart.Name = "checkBox_timestart";
+            this.checkBox_timestart.Size = new System.Drawing.Size(201, 18);
+            this.checkBox_timestart.TabIndex = 13;
+            this.checkBox_timestart.Text = "重设开始时间 / Start Time";
+            this.checkBox_timestart.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_backup
+            // 
+            this.checkBox_backup.AutoSize = true;
+            this.checkBox_backup.Location = new System.Drawing.Point(23, 25);
+            this.checkBox_backup.Name = "checkBox_backup";
+            this.checkBox_backup.Size = new System.Drawing.Size(117, 18);
+            this.checkBox_backup.TabIndex = 12;
+            this.checkBox_backup.Text = "备份 / Backup";
+            this.checkBox_backup.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(462, 768);
             this.Controls.Add(this.groupBox_others);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button_process);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.progressBar_process);
             this.Controls.Add(this.textBox_columns);
             this.Controls.Add(this.label_columns);
             this.Controls.Add(this.textBox_extname);
@@ -277,6 +296,7 @@
             this.Controls.Add(this.button_add_folder);
             this.Controls.Add(this.label_folder_list);
             this.Controls.Add(this.listView_folder);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.Text = "BioPhoto-2.2";
             this.groupBox_others.ResumeLayout(false);
@@ -304,11 +324,12 @@
         private System.Windows.Forms.CheckBox checkBox_timestart;
         private System.Windows.Forms.CheckBox checkBox_report;
         private System.Windows.Forms.CheckBox checkBox_rename;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar progressBar_process;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_process;
         private System.Windows.Forms.DateTimePicker dateTimePicker_starttime;
         private System.Windows.Forms.GroupBox groupBox_others;
+        private System.Windows.Forms.Label labelHint;
     }
 }
 
