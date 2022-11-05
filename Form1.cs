@@ -248,7 +248,7 @@ namespace BioPhoto
 
                 report_file.WriteLine(report_line);
 
-                progressBar_process.Value = 100 * i / sorted_files.Count<FileInfo>();
+                progressBar_process.Value = 100 * (i+1) / sorted_files.Count<FileInfo>();
             }
 
             report_file.Flush();
