@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,6 +14,11 @@ using System.Xml.Linq;
 using static System.Net.WebRequestMethods;
 using static System.Windows.Forms.LinkLabel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ExifLib;
+using Shell32;
+using Microsoft.WindowsAPICodePack;
+using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
 namespace BioPhoto
 {
@@ -167,8 +172,8 @@ namespace BioPhoto
 
                 ///按创建时间排序
                 IEnumerable<FileInfo> sorted_files = from original_file in files
-                                                                 orderby original_file.CreationTime.Ticks //"ascending" is default
-                                                                 select original_file; //sorting_by_creating_time
+                                                     orderby getCreateTime(original_file), original_file.CreationTime.Ticks //original_file.CreationTime.Ticks //"ascending" is default //getCreateTime(original_file),original_file.CreationTime.Ticks 
+                                                     select original_file; //sorting_by_creating_time
                 List<FileInfo> sorted_list = sorted_files.ToList();
 
                 if (sorted_list == null || sorted_list.Count == 0)
@@ -220,13 +225,14 @@ namespace BioPhoto
                 System.IO.File.Delete(report_file_name);
             }
 
-            StreamWriter report_file = new StreamWriter(report_file_name);
+            StreamWriter report_file = new StreamWriter(report_file_name, false, Encoding.UTF8);
 
             String header_txt = "文件编号,原始文件编号,文件格式,文件夹编号,相机编号,布设点位编号,拍摄日期,拍摄时间,工作天数" + ((header_ext == null || header_ext.Length == 0) ? "" : "," + header_ext);
             report_file.WriteLine(header_txt);
 
             //计算时间重置的位移
-            DateTime first_time = sorted_files[0].CreationTime;
+            DateTime first_time = getCreateTime(sorted_files[0]);
+
             TimeSpan timeAdjust = first_time - first_time;
             if (timeChange)
                 timeAdjust = first_time - starttime;
@@ -234,17 +240,18 @@ namespace BioPhoto
 
             for (int i = 0; i < sorted_files.Count<FileInfo>(); i++)
             {
-                String file_name = sorted_files[i].Name;
+                String file_name = Path.GetFileNameWithoutExtension(sorted_files[i].Name);
                 String file_name_old = original_file_name[i];
                 String file_format = sorted_files[i].Extension.ToUpper().Substring(1);
-                DateTime adjusted_time = sorted_files[i].CreationTime - timeAdjust;
+
+                DateTime adjusted_time = getCreateTime(sorted_files[i]) - timeAdjust;
 
                 String date_create = adjusted_time.ToString("d");
                 String time_create = adjusted_time.ToString("T");
 
-                String working_days = "" + (sorted_files[i].CreationTime - first_time).Days +1;
+                String working_days = "" + ((getCreateTime(sorted_files[i]) - first_time).Days +1);
 
-                String report_line = file_name + "," + file_name_old + "," + file_format + "," + "1" + "," + camera + "," + location + "," + date_create + "," + time_create + "," + working_days;
+                String report_line = file_name + "," + file_name_old + "," + file_format + "," + sorted_files[i].Directory.Name + "," + camera + "," + location + "," + date_create + "," + time_create + "," + working_days;
 
                 report_file.WriteLine(report_line);
 
@@ -270,7 +277,7 @@ namespace BioPhoto
             foreach (FileInfo file in filelist)
             {
                 String new_filename = System.IO.Path.Combine(backup_path, file.Name);
-                file.CopyTo(new_filename, true);
+                file.CopyTo(new_filename, false);
             }
 
         }
@@ -285,10 +292,11 @@ namespace BioPhoto
             {
                 filenumber++;
 
-                old_filename_list.Add(file.Name);
+//                old_filename_list.Add(file.Name);
+                old_filename_list.Add(Path.GetFileNameWithoutExtension(file.Name));
 
                 String dirName = file.Directory.Name;
-                String formated_file_name = dirName + String.Format("{0:0000}", filenumber) + file.Extension;
+                String formated_file_name = dirName +"-"+ String.Format("{0:0000}", filenumber) + file.Extension;
 
                 String new_filename = System.IO.Path.Combine(file.DirectoryName, formated_file_name);
 
@@ -298,6 +306,79 @@ namespace BioPhoto
 
             return old_filename_list;
         }
+/*
+        long getMediaTick(FileInfo file)
+        {
+            using (ExifReader reader = new ExifReader(file.FullName))
+            {
+                // Extract the tag data using the ExifTags enumeration
+                DateTime datePictureTaken;
+                if (reader.GetTagValue<DateTime>(ExifTags.DateTimeDigitized, out datePictureTaken))
+                {
+                    return datePictureTaken.Ticks;
+                }
+            }
+
+            return 0;
+        }*/
+
+        DateTime getPhotoDate(FileInfo file)
+        {
+            using (Image myImage = Image.FromFile(file.FullName))
+            { 
+                PropertyItem propItem = myImage.GetPropertyItem(306);
+                DateTime dtaken;
+
+                //Convert date taken metadata to a DateTime object
+                string sdate = Encoding.UTF8.GetString(propItem.Value).Trim();
+                string secondhalf = sdate.Substring(sdate.IndexOf(" "), (sdate.Length - sdate.IndexOf(" ")));
+                string firsthalf = sdate.Substring(0, 10);
+                firsthalf = firsthalf.Replace(":", "-");
+                sdate = firsthalf + secondhalf;
+                dtaken = DateTime.Parse(sdate);
+                return dtaken;
+            }
+        }
+
+        DateTime GetVideoCreateTime(FileInfo file)
+        {
+            /*            var shl = new Shell();
+                        var fldr = shl.NameSpace(Path.GetDirectoryName(file.FullName));
+                        var itm = fldr.ParseName(Path.GetFileName(file.FullName));
+
+                        // Index 27 is the video duration [This may not always be the case]
+                        var propValue = fldr.GetDetailsOf(itm, 27);
+
+                        return TimeSpan.TryParse(propValue, out duration);*/
+
+           using  (ShellObject shell = ShellObject.FromParsingName(file.FullName))
+            {
+                ShellProperty<DateTime?> data = shell.Properties.System.Media.DateEncoded;
+
+                return (DateTime)data.Value;
+            }
+
+        }
+
+        DateTime getCreateTime(FileInfo file)
+        {
+            try
+            {
+                return GetVideoCreateTime(file);
+            } catch(Exception e1)
+            {
+                try
+                {
+                    return getPhotoDate(file);
+                }
+                catch (Exception e2)
+                {
+                }
+
+                return file.CreationTime;
+            }
+        }
+
     }
 
 }
