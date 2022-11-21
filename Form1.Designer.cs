@@ -300,7 +300,7 @@
             this.Controls.Add(this.listView_folder);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
-            this.Text = "BioPhoto-2.3";
+            this.Text = "BioPhoto-2.4";
             this.groupBox_others.ResumeLayout(false);
             this.groupBox_others.PerformLayout();
             this.ResumeLayout(false);

@@ -355,7 +355,8 @@ namespace BioPhoto
             {
                 ShellProperty<DateTime?> data = shell.Properties.System.Media.DateEncoded;
 
-                return (DateTime)data.Value;
+                DateTime result = ((DateTime)data.Value) + (DateTime.UtcNow -DateTime.Now);
+                return result;
             }
 
         }
